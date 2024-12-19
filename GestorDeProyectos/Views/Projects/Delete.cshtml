@@ -1,0 +1,65 @@
+﻿@model GestorDeProyectos.Models.Project
+
+@{
+    ViewData["Title"] = "Eliminar Proyecto";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm" style="border-radius: 1rem;">
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <h3 class="card-title" style="color: #e74c3c;">¿Eliminar este proyecto?</h3>
+                        <p class="text-muted">Esta acción no se puede deshacer.</p>
+                    </div>
+
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Se eliminará toda la información relacionada con este proyecto, incluyendo:
+                        <ul class="mb-0 mt-2">
+                            <li>Registro de horas trabajadas</li>
+                            <li>Historial de actualizaciones</li>
+                            <li>Asignaciones de usuarios</li>
+                        </ul>
+                    </div>
+
+                    <div class="card bg-light mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">Detalles del Proyecto</h5>
+                            <dl class="row mb-0">
+                                <dt class="col-sm-3">Nombre</dt>
+                                <dd class="col-sm-9">@Model.Name</dd>
+
+                                <dt class="col-sm-3">Estado</dt>
+                                <dd class="col-sm-9">
+                                    <span class="badge @(Model.Status == "Completado" ? "bg-success" :
+                                                      Model.Status == "En Progreso" ? "bg-primary" : "bg-warning")">
+                                        @Model.Status
+                                    </span>
+                                </dd>
+
+                                <dt class="col-sm-3">Horas Registradas</dt>
+                                <dd class="col-sm-9">@Model.TotalHours</dd>
+
+                                <dt class="col-sm-3">Fecha Inicio</dt>
+                                <dd class="col-sm-9">@Model.StartDate.ToString("dd/MM/yyyy")</dd>
+
+                                <dt class="col-sm-3">Fecha Fin</dt>
+                                <dd class="col-sm-9">@Model.EndDate.ToString("dd/MM/yyyy")</dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <form asp-action="Delete" class="text-center">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="d-flex gap-2 justify-content-center">
+                            <button type="submit" class="btn btn-danger">Eliminar Proyecto</button>
+                            <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

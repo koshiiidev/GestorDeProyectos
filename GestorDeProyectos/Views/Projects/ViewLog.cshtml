@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ProjectLog>
+@{
+    ViewData["Title"] = "Historial del Proyecto";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title mb-4">Historial de Cambios</h2>
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Acción</th>
+                            <th>Descripción</th>
+                            <th>Usuario</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var log in Model.OrderByDescending(l => l.CreatedAt))
+                        {
+                            <tr>
+                                <td>@log.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>@log.Action</td>
+                                <td>@log.Description</td>
+                                <td>@log.CreatedBy</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,102 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #f8f9fa;
+}
+
+
+.display-4 {
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.lead {
+    line-height: 1.6;
+}
+
+.shadow-lg {
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+}
+
+.btn {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/
+.btn, .card, img {
+    transition: all 0.3s ease;
+}
+
+
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+    }
+
+
+.rounded-4 {
+    border-radius: 1rem !important;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    border: none;
+}
+
+    .btn-primary:hover {
+        background-color: #2980b9;
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+    }
+
+.btn-outline-primary {
+    color: #3498db;
+    border-color: #3498db;
+}
+
+    .btn-outline-primary:hover {
+        background-color: #3498db;
+        border-color: #3498db;
+        color: white;
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+    }
+
+
+.mt-5 {
+    margin-top: 3rem !important;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    color: #2c3e50;
+}
+
+.text-muted {
+    color: #7f8c8d !important;
+}

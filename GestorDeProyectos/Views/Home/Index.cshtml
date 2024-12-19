@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="container mt-5">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <div class="pe-4">
+                <h1 class="display-4 fw-bold mb-4" style="color: #2c3e50;">Gestor de Proyectos</h1>
+                <p class="lead mb-4" style="color: #34495e; font-size: 1.25rem;">
+                    Una manera sencilla y eficiente de gestionar tus proyectos. Organiza, planifica y realiza un seguimiento de tus proyectos de forma efectiva.
+                </p>
+                @if (!User.Identity?.IsAuthenticated ?? true)
+                {
+                    <div class="d-flex gap-3 mt-5">
+                        <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg px-4 py-2"
+                           style="background-color: #3498db; border: none; transition: all 0.3s ease;">
+                            Registrarse
+                        </a>
+                        <a asp-controller="Account" asp-action="Login" class="btn btn-outline-primary btn-lg px-4 py-2"
+                           style="color: #3498db; border-color: #3498db; transition: all 0.3s ease;">
+                            Iniciar Sesión
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="mt-5">
+                        <a asp-controller="Projects" asp-action="Index" class="btn btn-primary btn-lg px-4 py-2"
+                           style="background-color: #3498db; border: none; transition: all 0.3s ease;">
+                            Ver Mis Proyectos
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="position-relative">
+                <div class="shadow-lg rounded-4 overflow-hidden">
+                    <img src="~/images/project-managment.jpg" alt="Gestión de Proyectos"
+                         class="img-fluid rounded-4" style="object-fit: cover; width: 100%;">
+                </div>
+                <div class="position-absolute bottom-0 end-0 bg-white p-3 rounded-4 shadow-lg me-4 mb-4">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="fw-bold">Gestión eficiente</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

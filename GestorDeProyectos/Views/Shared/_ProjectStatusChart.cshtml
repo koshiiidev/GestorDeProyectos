@@ -1,0 +1,22 @@
+﻿@model GestorDeProyectos.Models.ViewModels.DashboardViewModel
+
+<div class="text-center">
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="d-flex justify-content-around">
+                <div class="text-center">
+                    <div class="h4">@Model.ProjectsPending</div>
+                    <div class="text-muted">Pendientes</div>
+                </div>
+                <div class="text-center">
+                    <div class="h4">@Model.ProjectsInProgress</div>
+                    <div class="text-muted">En Progreso</div>
+                </div>
+                <div class="text-center">
+                    <div class="h4">@Model.ProjectsCompleted</div>
+                    <div class="text-muted">Completados</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

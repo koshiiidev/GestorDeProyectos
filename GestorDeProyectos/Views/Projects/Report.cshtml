@@ -1,0 +1,79 @@
+﻿@model GestorDeProyectos.Models.ViewModels.ProjectReport
+@{
+    ViewData["Title"] = "Reporte del Proyecto";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-sm" style="border-radius: 1rem;">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="card-title" style="color: #2c3e50;">Reporte del Proyecto</h2>
+                        <span class="badge bg-success">Completado</span>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h5 class="card-title">Información General</h5>
+                                    <dl class="row mb-0">
+                                        <dt class="col-sm-4">Proyecto</dt>
+                                        <dd class="col-sm-8">@Model.ProjectName</dd>
+
+                                        <dt class="col-sm-4">Total Horas</dt>
+                                        <dd class="col-sm-8">@Model.TotalHours</dd>
+
+                                        <dt class="col-sm-4">Completado</dt>
+                                        <dd class="col-sm-8">@Model.CompletionDate.ToString("dd/MM/yyyy")</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 class="mb-3">Historial de Actualizaciones</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Estado</th>
+                                    <th>Usuario</th>
+                                    <th>Horas Reportadas</th>
+                                    <th>Comentarios</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var update in Model.StatusUpdates.OrderByDescending(u => u.UpdateDate))
+                                {
+                                    <tr>
+                                        <td>@update.UpdateDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                        <td>
+                                            <span class="badge @(update.Status == "Completado" ? "bg-success" :
+                                                               update.Status == "En Progreso" ? "bg-primary" : "bg-warning")">
+                                                @update.Status
+                                            </span>
+                                        </td>
+                                        <td>@update.UpdatedBy</td>
+                                        <td>@update.HoursWorked</td>
+                                        <td>@update.Comments</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-4">
+                        <a asp-action="Index" class="btn btn-outline-secondary">Volver a Proyectos</a>
+                        
+                        <!--<button class="btn btn-outline-primary ms-2">
+                            <i class="fas fa-download me-2"></i>Exportar Reporte
+                        </button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

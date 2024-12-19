@@ -1,0 +1,49 @@
+﻿@model GestorDeProyectos.Models.ViewModels.DashboardViewModel
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow-sm" style="border-radius: 1rem;">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Proyectos Recientes</h5>
+                <div class="list-group">
+                    @foreach (var project in Model.RecentProjects)
+                    {
+                        <a href="@Url.Action("Details", "Projects", new { id = project.Id })"
+                           class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">@project.Name</h6>
+                                <span class="badge @(project.Status == "Completado" ? "bg-success" :
+                                                   project.Status == "En Progreso" ? "bg-primary" : "bg-warning")">
+                                    @project.Status
+                                </span>
+                            </div>
+                            <small class="text-muted">
+                                Última actualización: @(project.LastStatusUpdate?.ToString("dd/MM/yyyy HH:mm") ?? "Sin actualizaciones")
+                            </small>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow-sm" style="border-radius: 1rem;">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Últimas Actualizaciones</h5>
+                <div class="list-group">
+                    @foreach (var update in Model.RecentUpdates)
+                    {
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">@update.Project?.Name</h6>
+                                <small>@update.UpdateDate.ToString("dd/MM/yyyy HH:mm")</small>
+                            </div>
+                            <p class="mb-1">Estado: @update.Status</p>
+                            <small class="text-muted">Por: @update.UpdatedBy</small>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

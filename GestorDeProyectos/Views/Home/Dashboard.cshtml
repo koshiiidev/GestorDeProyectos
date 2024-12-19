@@ -1,0 +1,71 @@
+﻿@model GestorDeProyectos.Models.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container mt-4">
+    <h1 class="display-6 fw-bold mb-4" style="color: #2c3e50;">Dashboard Administrativo</h1>
+
+    
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card shadow-sm" style="border-radius: 1rem;">
+                <div class="card-body text-center">
+                    <h6 class="text-muted mb-2">Total Proyectos</h6>
+                    <h2 class="mb-0" style="color: #3498db;">@Model.TotalProjects</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm" style="border-radius: 1rem;">
+                <div class="card-body text-center">
+                    <h6 class="text-muted mb-2">En Progreso</h6>
+                    <h2 class="mb-0" style="color: #f1c40f;">@Model.ProjectsInProgress</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm" style="border-radius: 1rem;">
+                <div class="card-body text-center">
+                    <h6 class="text-muted mb-2">Completados</h6>
+                    <h2 class="mb-0" style="color: #2ecc71;">@Model.ProjectsCompleted</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm" style="border-radius: 1rem;">
+                <div class="card-body text-center">
+                    <h6 class="text-muted mb-2">Total Usuarios</h6>
+                    <h2 class="mb-0" style="color: #9b59b6;">@Model.TotalUsers</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm" style="border-radius: 1rem;">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Estado de Proyectos</h5>
+                    <div style="height: 300px;">
+                        @await Html.PartialAsync("_ProjectStatusChart", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm" style="border-radius: 1rem;">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Horas Trabajadas por Proyecto</h5>
+                    <div style="height: 300px;">
+                        @await Html.PartialAsync("_ProjectHoursChart", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    @await Html.PartialAsync("_DashboardLists", Model)
+</div>

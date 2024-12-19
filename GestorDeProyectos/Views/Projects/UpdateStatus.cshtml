@@ -1,0 +1,78 @@
+﻿@model GestorDeProyectos.Models.Project
+
+@{
+    ViewData["Title"] = "Actualizar Estado";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm" style="border-radius: 1rem;">
+                <div class="card-body p-4">
+                    <h2 class="card-title mb-4" style="color: #2c3e50;">Actualizar Estado del Proyecto</h2>
+
+                    <dl class="row mb-4">
+                        <dt class="col-sm-3">Proyecto</dt>
+                        <dd class="col-sm-9">@Model.Name</dd>
+
+                        <dt class="col-sm-3">Estado Actual</dt>
+                        <dd class="col-sm-9">
+                            <span class="badge @(Model.Status == "Completado" ? "bg-success" :
+                                               Model.Status == "En Progreso" ? "bg-primary" : "bg-warning")">
+                                @Model.Status
+                            </span>
+                        </dd>
+
+                        <dt class="col-sm-3">Horas Totales</dt>
+                        <dd class="col-sm-9">@Model.TotalHours</dd>
+
+                        @if (Model.LastStatusUpdate.HasValue)
+                        {
+                            <dt class="col-sm-3">Última Actualización</dt>
+                            <dd class="col-sm-9">@Model.LastStatusUpdate.Value.ToString("dd/MM/yyyy HH:mm")</dd>
+                        }
+                    </dl>
+
+                    <form asp-action="UpdateStatus" method="post">
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="mb-3">
+                            <label class="form-label">Nuevo Estado</label>
+                            <select name="status" class="form-select">
+                                <option selected="@(Model.Status == "Pendiente")" value="Pendiente">Pendiente</option>
+                                <option selected="@(Model.Status == "En Progreso")" value="En Progreso">En Progreso</option>
+                                <option selected="@(Model.Status == "Completado")" value="Completado">Completado</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Horas Trabajadas</label>
+                            <input type="number" name="hoursWorked" class="form-control"
+                                   step="0.5" min="0" required />
+                            <small class="text-muted">
+                                Ingrese las horas trabajadas desde la última actualización
+                            </small>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Comentarios</label>
+                            <textarea name="comments" class="form-control"
+                                      rows="3" placeholder="Describa brevemente el avance o cambios realizados..."></textarea>
+                            <small class="text-muted">
+                                Opcional: Agregue detalles sobre el trabajo realizado
+                            </small>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary"
+                                    style="background-color: #3498db; border: none;">
+                                Actualizar Estado
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary">Volver</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

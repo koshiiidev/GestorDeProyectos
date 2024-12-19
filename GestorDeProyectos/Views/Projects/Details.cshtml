@@ -1,0 +1,77 @@
+﻿@model GestorDeProyectos.Models.Project
+
+@{
+    ViewData["Title"] = "Detalles del Proyecto";
+    var isAdmin = User.IsInRole("Admin");
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm" style="border-radius: 1rem;">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="card-title mb-0" style="color: #2c3e50;">Detalles del Proyecto</h2>
+                        <span class="badge @(Model.Status == "Completado" ? "bg-success" : 
+                                           Model.Status == "En Progreso" ? "bg-primary" : "bg-warning")">
+                            @Model.Status
+                        </span>
+                    </div>
+
+                    <dl class="row">
+                        <dt class="col-sm-3">Nombre</dt>
+                        <dd class="col-sm-9">@Model.Name</dd>
+
+                        <dt class="col-sm-3">Descripción</dt>
+                        <dd class="col-sm-9">@Model.Description</dd>
+
+                        <dt class="col-sm-3">Fecha de Inicio</dt>
+                        <dd class="col-sm-9">@Model.StartDate.ToShortDateString()</dd>
+
+                        <dt class="col-sm-3">Fecha de Fin</dt>
+                        <dd class="col-sm-9">@Model.EndDate.ToShortDateString()</dd>
+
+                        <dt class="col-sm-3">Estado</dt>
+                        <dd class="col-sm-9">@Model.Status</dd>
+
+                        <dt class="col-sm-3">Horas Totales</dt>
+                        <dd class="col-sm-9">@Model.TotalHours</dd>
+
+                        @if (Model.LastStatusUpdate.HasValue)
+                        {
+                            <dt class="col-sm-3">Última Actualización</dt>
+                            <dd class="col-sm-9">
+                                @Model.LastStatusUpdate.Value.ToString("dd/MM/yyyy HH:mm")
+                                @if (!string.IsNullOrEmpty(Model.LastUpdateBy))
+                                {
+                                    <small class="text-muted">por @Model.LastUpdateBy</small>
+                                }
+                            </dd>
+                        }
+                    </dl>
+
+                    <div class="d-flex gap-2 mt-4">
+                        @if (isAdmin)
+                        {
+                            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary"
+                               style="background-color: #3498db; border: none;">Editar</a>
+                            <a asp-action="Assign" asp-route-id="@Model.Id" class="btn btn-info"
+                               style="border: none;">Asignar Usuarios</a>
+                            <a asp-action="ViewLog" asp-route-id="@Model.Id" class="btn btn-secondary">Ver Historial</a>
+                            @if (Model.Status == "Completado")
+                            {
+                                <a asp-action="Report" asp-route-id="@Model.Id" class="btn btn-success">Ver Reporte</a>
+                            }
+                        }
+                        else
+                        {
+                            <a asp-action="UpdateStatus" asp-route-id="@Model.Id" class="btn btn-primary"
+                               style="background-color: #3498db; border: none;">Actualizar Estado</a>
+                        }
+                        <a asp-action="Index" class="btn btn-outline-secondary">Volver</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

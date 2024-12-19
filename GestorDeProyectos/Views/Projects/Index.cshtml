@@ -1,0 +1,111 @@
+﻿@model IEnumerable<GestorDeProyectos.Models.Project>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    ViewData["Title"] = "Mis Proyectos";
+    var isAdmin = User.IsInRole("Admin");
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-6 fw-bold" style="color: #2c3e50;">Mis Proyectos</h1>
+        @if (isAdmin)
+        {
+            <a asp-action="Create" class="btn btn-primary px-4" style="background-color: #3498db; border: none;">
+                Crear Nuevo Proyecto
+            </a>
+        }
+    </div>
+
+   
+    <div class="card mb-4 shadow-sm" style="border-radius: 1rem;">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Buscar</label>
+                    <input type="text" name="searchString" class="form-control" placeholder="Nombre o descripción..."
+                           value="@ViewData["CurrentFilter"]" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Estado</label>
+                    <select name="status" class="form-select">
+                        <option value="">Todos</option>
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="En Progreso">En Progreso</option>
+                        <option value="Completado">Completado</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Ordenar por</label>
+                    <select name="sortOrder" class="form-select">
+                        <option value="date_desc">Fecha (más reciente)</option>
+                        <option value="date_asc">Fecha (más antiguo)</option>
+                        <option value="name">Nombre (A-Z)</option>
+                        <option value="name_desc">Nombre (Z-A)</option>
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5">
+            <h3 class="text-muted">No tienes proyectos aún</h3>
+            <p class="lead">@(isAdmin ? "Comienza creando tu primer proyecto" : "No hay proyectos asignados")</p>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm" style="border-radius: 1rem;">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="card-title mb-0">@item.Name</h5>
+                                <span class="badge @(item.Status == "Completado" ? "bg-success" :
+                                                   item.Status == "En Progreso" ? "bg-primary" : "bg-warning")"
+                                      style="@(item.Status == "En Progreso" ? "background-color: #3498db !important;" : "")">
+                                    @item.Status
+                                </span>
+                            </div>
+                            <p class="card-text text-muted">@(item.Description?.Length > 100 ? item.Description.Substring(0, 97) + "..." : item.Description)</p>
+                            <div class="small text-muted mb-3">
+                                <div><i class="fas fa-calendar-alt me-2"></i>Inicio: @item.StartDate.ToShortDateString()</div>
+                                <div><i class="fas fa-calendar-check me-2"></i>Fin: @item.EndDate.ToShortDateString()</div>
+                                @if (item.TotalHours > 0)
+                                {
+                                    <div><i class="fas fa-clock me-2"></i>Horas Totales: @item.TotalHours</div>
+                                }
+                            </div>
+                            <div class="d-flex gap-2">
+                                @if (isAdmin)
+                                {
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Editar</a>
+                                    <a asp-action="Assign" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Asignar Usuarios</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm">Eliminar</a>
+                                }
+                                else
+                                {
+                                    <a asp-action="UpdateStatus" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Actualizar Estado</a>
+                                }
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm">Detalles</a>
+                                @if (isAdmin && item.Status == "Completado")
+                                {
+                                    <a asp-action="Report" asp-route-id="@item.Id" class="btn btn-outline-success btn-sm">Ver Reporte</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
